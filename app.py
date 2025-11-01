@@ -160,8 +160,12 @@ class StudyPlanner:
                 if not classes:
                     st.info("بدون کلاس")
                 else:
-                    for cls in sorted(classes, key=lambda x: x['start']):
-                        st.success(f"{cls['name']}\n{cls['start']} - {cls['end']}")
+                    for idx, cls in enumerate(sorted(classes, key=lambda x: x['start'])):
+                        st.success(f"{cls['name']} — {cls['start']} تا {cls['end']}")
+                    if st.button("حذف", key=f"delete_class_{day}_{idx}"):
+                        current_week[day].pop(idx)
+                        self.save_data()
+                        st.rerun()
 
     def create_daily_tab(self):
         """تب کارهای روزانه"""
